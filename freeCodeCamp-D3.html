@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>
+      D3 Test
+    </title>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    <script>
+      window.onload =() => {
+       months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+    formatBillions = d3.format("$,.1f");
+
+  var tooltip = d3.select('body').append("div").attr("class", "tooltip");
+
+() => {
+  
+  var svg = d3.select("svg"),
+      margin = {top: 20, right: 20, bottom: 40, left: 40},
+      width = +svg.attr("width") - margin.left - margin.right,
+      height = +svg.attr("height") - margin.top - margin.bottom;
+
+  var x = d3.scaleTime().range([0, width]),
+      y = d3.scaleLinear().rangeRound([height, 0]);
+
+  var g = svg.append("g")
+      .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+  var responseJSON = JSON.parse(response); 
+    
+  d3.select('#notes')
+    .append('text')
+    .text(responseJSON.description);   
+  
+  var dataArr  = data.data;  
+  var data =[];
+
+  dataArr.forEach(function(d) {
+    var obj = {};
+    obj.date = new Date(d[0]);
+    obj.gdp = d[1];
+    data.push(obj);
+  });
+  
+  var chartWidth = Math.ceil(width / data.length);
+  var dateA = data[0].date;
+  var dateZ = data[data.length - 1].date;
+  
+  x.domain([dateA, dateZ]);
+  y.domain([0, d3.max(data, function(d) { return d.gdp; })]);
+
+  g.append("g")
+      .attr("class", "axis axis--x")
+      .attr("transform", "translate(0," + height + ")")
+      .call(d3.axisBottom(x).ticks(d3.timeYear, 5).tickFormat(d3.timeFormat("%Y")).tickSizeOuter(0))
+      .selectAll("text")  
+        .style("text-anchor", "end")
+        .attr("dx", "-.8em")
+        .attr("dy", ".15em")
+        .attr("transform", "rotate(-65)" );
+  
+  g.append("g")
+      .attr("class", "axis axis--y")
+      .call(d3.axisLeft(y).ticks(10).tickSizeOuter(0))
+    .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+      .attr("dy", "0.71em")
+      .attr("text-anchor", "end")
+      .text("U.S Gross Domestic Product (in Billions of $)");
+
+  g.selectAll(".bar")
+    .data(data)
+    .enter().append("rect")
+      .attr("class", "bar")
+      .attr("x", function(d) { return x(d.date); })
+      .attr("y", function(d) { return y(d.gdp); })
+      .attr("width", chartWidth)
+      .attr("height", function(d) { return height - y(d.gdp); })
+      .on("mouseover", showTip)
+      .on("mouseout", hideTip);
+}};
+
+function showTip(d) {
+  var bar = d3.select(this);
+  bar.attr("class", "mouseover");
+  var year = d.date.getFullYear();
+  var month = d.date.getMonth();
+  tooltip.html('<span class="date">' + months[month] + ' ' + year + '</span><span class="dollars">' + formatBillions(d.gdp) + ' billion</span>')
+  .style('left', (d3.event.pageX + 10) + 'px')
+  .style('top', (d3.event.pageY + 10) + 'px')
+  .style('display', 'block');
+}
+
+function hideTip(d) {
+  var bar = d3.select(this);
+  bar.attr('class', 'bar')
+  tooltip.style('display', 'none');
+}
+      
+    </script>
+  </head>
+  <body>
+    <h1 id="title">
+      D3 FC Test
+    </h1>
+    <div id="myChart">
+
+    </div>
+
+  </body>
+</html>
