@@ -23,7 +23,7 @@ function App() {
   return (
     <>
       <div id="drum-machine">
-        <div id="pad-wrapper" >
+        <div id="pad-wrapper">
           { padKeys.map(pad => { 
             pad = padObj[ pad ]
             console.log(pad, padKeys)
