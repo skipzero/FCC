@@ -20,8 +20,8 @@
     "esnext-loader": "^1.1.0",
     "gh-pages": "^5.0.0",
     "html-webpack-plugin": "^4.3.0",
-    "webpack": "^5.92.0",
-    "webpack-cli": "^5.1.4",
+    "webpack": "^4.43.0",
+    "webpack-cli": "^3.3.11",
     "webpack-dev-server": "^5.0.4"
   },
   "dependencies": {
