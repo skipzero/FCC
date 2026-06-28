@@ -13,9 +13,9 @@
   "author": "skipzero",
   "license": "ISC",
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/preset-env": "^7.9.6",
-    "babel-loader": "^8.1.0",
+    "@babel/core": "^8.0.1",
+    "@babel/preset-env": "^8.0.2",
+    "babel-loader": "^10.1.1",
     "esbuild-loader": "^4.3.0",
     "esnext-loader": "^1.0.0",
     "gh-pages": "^5.0.0",
